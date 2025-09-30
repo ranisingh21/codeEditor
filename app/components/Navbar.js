@@ -17,7 +17,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
       }}
     >
       <div className="logo" style={{ fontWeight: "bold", fontSize: "1.2rem" }}>⚡ Contest</div>
-      <ul style={{ display: "flex", gap: "2rem", listStyle: "none", margin: 0, padding: 0 }}>
+      {/* <ul style={{ display: "flex", gap: "2rem", listStyle: "none", margin: 0, padding: 0 }}>
         <li style={{ cursor: "pointer", padding: "0.5rem 1rem", borderRadius: "4px", transition: "background 0.2s" }}
             onMouseEnter={(e) => e.target.style.background = darkMode ? "#333" : "#f0f0f0"}
             onMouseLeave={(e) => e.target.style.background = "transparent"}>Problems</li>
@@ -25,7 +25,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
             onMouseEnter={(e) => e.target.style.background = darkMode ? "#333" : "#f0f0f0"}
             onMouseLeave={(e) => e.target.style.background = "transparent"}>Leaderboard</li>
        
-      </ul>
+      </ul> */}
       <div className="actions" style={{ display: "flex", gap: "1rem" }}>
         <button
           onClick={toggleTheme}
@@ -48,7 +48,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
         >
           {darkMode ? "☀️ Light" : "🌙 Dark"}
         </button>
-        <button style={{ 
+        {/* <button style={{ 
           padding: "0.5rem 1rem", 
           cursor: "pointer",
           backgroundColor: darkMode ? "#333" : "#f0f0f0",
@@ -62,7 +62,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
         }}
         onMouseLeave={(e) => {
           e.target.style.backgroundColor = darkMode ? "#333" : "#f0f0f0";
-        }}>Profile</button>
+        }}>Profile</button> */}
       </div>
     </nav>
   );
