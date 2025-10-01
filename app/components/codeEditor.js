@@ -21,15 +21,15 @@ export default function CodeEditor({ problemId, darkMode }) {
   });
 
   useEffect(() => {
-  if (previousSubmissions.length > 0) {
-   setSubmissionInfo(previousSubmissions[0]);
-  const latest = previousSubmissions[0];
-   setSubmissionInfo(latest);
-   if (!latest.verdict || latest.verdict.includes("Pending")) {
-    pollVerdict(latest.submissionId);
-   }
-  }
-}, []);
+    if (previousSubmissions.length > 0) {
+      setSubmissionInfo(previousSubmissions[0]);
+      const latest = previousSubmissions[0];
+      setSubmissionInfo(latest);
+      if (!latest.verdict || latest.verdict.includes("Pending")) {
+        pollVerdict(latest.submissionId);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (problemId) setCode(getStarterCode(language));
@@ -343,30 +343,37 @@ export default function CodeEditor({ problemId, darkMode }) {
             overflow: 'hidden',
             boxShadow: darkMode ? '0 2px 8px rgba(0,0,0,0.2)' : '0 2px 8px rgba(0,0,0,0.1)'
           }}>
-           <thead>
-  <tr style={{ backgroundColor: darkMode ? '#1f2937' : 'grey' }}>
-    <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Submission ID</th>
-    <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Judgement ID</th>
-    <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Status</th>
-    <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Verdict</th>
-    <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Runtime (sec)</th>
-  </tr>
-</thead>
+            <thead>
+              <tr style={{ backgroundColor: darkMode ? '#1f2937' : 'grey' }}>
+                <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Submission ID</th>
+                <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Judgement ID</th>
+                <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Status</th>
+                <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Verdict</th>
+                <th style={{ ...thStyle, color: darkMode ? '#e5e7eb' : 'black' }}>Runtime (sec)</th>
+              </tr>
+            </thead>
 
             <tbody>
               <tr style={{ borderBottom: darkMode ? '1px solid #444' : '1px solid #ddd' }}>
-                <td style={{ ...tdStyle }}>{loading ? 'Pending...' : submissionInfo?.submissionId}</td>
-                <td style={{ ...tdStyle }}>{loading ? 'Pending...' : submissionInfo?.judgementId}</td>
-                              <td style={{ ...tdStyle }}>
+                <td style={{ ...tdStyle }}>
+                  {loading ? 'Pending...' : submissionInfo?.submissionId}
+                </td>
+                <td style={{ ...tdStyle }}>
+                  {loading ? 'Pending...' : submissionInfo?.judgementId}
+                </td>
+                <td style={{ ...tdStyle }}>
                   {loading
                     ? "Pending..."
                     : submissionInfo?.status === "Timeout"
                       ? "⚠ Not Evaluated (Timeout)"
-                      : submissionInfo?.verdict && submissionInfo?.runtime && submissionInfo?.verdict !== "Pending..."
-                        ? "✅ Evaluated"
-                        : "Pending..."}
+                      : !submissionInfo?.verdict ||
+                        submissionInfo?.verdict === "Pending..." ||
+                        submissionInfo?.verdict.includes("⏳") ||
+                        !submissionInfo?.runtime ||
+                        submissionInfo?.runtime === "Pending..."
+                        ? "Pending..."
+                        : "✅ Evaluated"}
                 </td>
-
                 <td
                   style={{
                     ...tdStyle,
@@ -377,7 +384,9 @@ export default function CodeEditor({ problemId, darkMode }) {
                 >
                   {loading ? 'Pending...' : submissionInfo?.verdict}
                 </td>
-                <td style={{ ...tdStyle }}>{loading ? 'Pending...' : submissionInfo?.runtime}</td>
+                <td style={{ ...tdStyle }}>
+                  {loading ? 'Pending...' : submissionInfo?.runtime}
+                </td>
               </tr>
             </tbody>
           </table>
